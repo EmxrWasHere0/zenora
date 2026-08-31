@@ -12,7 +12,7 @@ cursor = conn.cursor()
 
 dotenv.load_dotenv(".env")
 
-VERSION = "0.2.56b"
+VERSION = "0.2.60b"
 CODENAME = "beckford"
 STATE = "RELEASE"
 
@@ -32,6 +32,7 @@ async def setup_hook():
     await bot.load_extension("cogs.item")
     await bot.load_extension("cogs.squad")
     await bot.load_extension("cogs.zzz")
+    await bot.load_extension("cogs.update")
     print("Loaded.")
 
     print("Syncronizing slash commands")
