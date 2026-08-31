@@ -14,7 +14,7 @@ import itertools
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 root_dir = os.path.dirname(current_dir)
-SQL_PATH = os.path.join(root_dir, "zencord.sqlite3")
+SQL_PATH = "~/zencord.sqlite3"
 ENV_PATH = os.path.join(root_dir, ".env")
 BG_PATH = os.path.join(root_dir, "profile-bg.png")
 FONT = os.path.join(root_dir, "zzz.ttf")

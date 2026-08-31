@@ -11,7 +11,7 @@ import dotenv
 current_dir = os.path.dirname(os.path.abspath(__file__))
 root_dir = os.path.dirname(current_dir)
 JSON_PATH = os.path.join(root_dir, "signal.json")
-SQL_PATH = os.path.join(root_dir, "zencord.sqlite3")
+SQL_PATH = "~/zencord.sqlite3"
 ENV_PATH = os.path.join(root_dir, ".env")
 
 conn = sqlite3.connect(SQL_PATH)

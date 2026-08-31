@@ -9,7 +9,7 @@ import dotenv
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 root_dir = os.path.dirname(current_dir)
-SQL_PATH = os.path.join(root_dir, "zencord.sqlite3")
+SQL_PATH = "~/zencord.sqlite3"
 ENV_PATH = os.path.join(root_dir, ".env")
 
 dotenv.load_dotenv(ENV_PATH)
@@ -56,7 +56,7 @@ class Start(commands.Cog):
             """,
             (
                 i.user.id,
-                5,
+                25,
                 5,
                 1000,
                 100,

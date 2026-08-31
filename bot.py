@@ -7,7 +7,7 @@ import platform
 import subprocess
 import sqlite3
 
-conn = sqlite3.connect("zencord.sqlite3")
+conn = sqlite3.connect("~/zencord.sqlite3")
 cursor = conn.cursor()
 
 dotenv.load_dotenv(".env")
