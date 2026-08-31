@@ -241,8 +241,8 @@ class GitHubUpdater(commands.Cog):
             # exec proxychains python3 bot.py
 
             os.execv(
-                str(self.start_script),
-                [str(self.start_script)]
+                "/bin/bash",
+                ["/bin/bash", "/home/admin/Belgeler/GitHub/zenora/start.sh"]
             )
 
         except Exception as error:
