@@ -12,7 +12,7 @@ cursor = conn.cursor()
 
 dotenv.load_dotenv(".env")
 
-VERSION = "0.2.60b"
+VERSION = "0.2.61b"
 CODENAME = "beckford"
 STATE = "RELEASE"
 
