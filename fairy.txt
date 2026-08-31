@@ -1,0 +1,15 @@
+nohup: girdi yok sayılıyor
+[proxychains] config file found: /etc/proxychains.conf
+[proxychains] preloading /usr/lib/libproxychains4.so
+[proxychains] DLL init: proxychains-ng 4.17
+[2026-08-26 12:42:39] [INFO    ] discord.client: logging in using static token
+[proxychains] Strict chain  ...  127.0.0.1:9050  ...  discord.com:443  ...  OK
+[proxychains] Strict chain  ...  127.0.0.1:9050  ...  raw.githubusercontent.com:443  ...  OK
+[proxychains] Strict chain  ...  127.0.0.1:9050  ...  raw.githubusercontent.com:443  ...  OK
+[proxychains] Strict chain  ...  127.0.0.1:9050  ...  raw.githubusercontent.com:443  ...  OK
+[proxychains] Strict chain  ...  127.0.0.1:9050  ...  raw.githubusercontent.com:443  ...  OK
+[proxychains] Strict chain  ...  127.0.0.1:9050  ...  gateway.discord.gg:443  ...  OK
+[2026-08-26 12:42:43] [INFO    ] discord.gateway: Shard ID None has connected to Gateway (Session ID: b7d70e99843cb0854a531e48024f6dec).
+[proxychains] Strict chain  ...  127.0.0.1:9050  ...  discord.com:443  ...  OK
+[proxychains] Strict chain  ...  127.0.0.1:9050  ...  discord.com:443  ...  OK
+[proxychains] Strict chain  ...  127.0.0.1:9050  ...  discord.com:443  ...  OK
