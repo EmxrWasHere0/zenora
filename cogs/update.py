@@ -1,4 +1,3 @@
-````python
 import io
 import os
 import shutil
@@ -37,7 +36,9 @@ class GitHubUpdater(commands.Cog):
         name="update",
         description="Updates the bot [OWNER COMMAND]"
     )
-    @app_commands.checks.is_owner()
+    @app_commands.check(
+        lambda interaction: interaction.client.is_owner(interaction.user)
+    )
     @app_commands.checks.cooldown(1, 30.0)
     async def update(self, interaction: discord.Interaction):
 
@@ -311,4 +312,3 @@ async def setup(bot):
     await bot.add_cog(
         GitHubUpdater(bot)
     )
-````
