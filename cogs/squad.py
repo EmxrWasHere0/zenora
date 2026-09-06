@@ -68,18 +68,24 @@ EMOJIS = {
     "Polychrome": "<:polychrome:1536789473923178610>",
     "Search": "<:search:1536791450585538610>",
     "Pulchra Fellini": "<:pulchra:1537342670307991562>",
+    "Dialyn": "<:dialyn:1539671015624540220>",
+    "Asaba Harumasa": "<:harumasa:1539671017423634502>",
+    "Sigrid de L'Azur": "<:sigrid:1539671019042635936>",
+    "Ukinami Yuzuha": "<:yuzuha:1539671020883935294>",
 }
+
 
 class Squad(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
     # Auto-Complete method
-    async def autocomplete(self, i: discord.Interaction, current: str) -> List[app_commands.Choice[str]]:
+    async def autocomplete(
+        self, i: discord.Interaction, current: str
+    ) -> List[app_commands.Choice[str]]:
 
         cursor.execute(
-            "SELECT character_name FROM user_characters WHERE user_id = ?",
-            (i.user.id,)
+            "SELECT character_name FROM user_characters WHERE user_id = ?", (i.user.id,)
         )
         chars = cursor.fetchall()
 
@@ -92,8 +98,10 @@ class Squad(commands.Cog):
     squad = app_commands.Group(name="squad", description="Squad commands")
 
     @squad.command(name="set", description="Set your squad.")
-    @app_commands.autocomplete(agent1=autocomplete, agent2=autocomplete, agent3=autocomplete)
-    async def set(self, i:discord.Interaction, agent1: str, agent2: str, agent3: str):
+    @app_commands.autocomplete(
+        agent1=autocomplete, agent2=autocomplete, agent3=autocomplete
+    )
+    async def set(self, i: discord.Interaction, agent1: str, agent2: str, agent3: str):
         await i.response.defer(thinking=True)
         if any(a == b for a, b in itertools.combinations([agent1, agent2, agent3], 2)):
             await i.followup.send("Your squad cannot have same agent more than once.")
@@ -105,12 +113,18 @@ class Squad(commands.Cog):
             try:
                 cursor.execute(
                     """INSERT INTO squads (
-                        user_id, agent1, agent2, agent3
+                        user_id, agent_one, agent_two, agent_three
                     )
                     VALUES (
                         ?, ?, ?, ?
                     );""",
-                (i.user.id, agent1, agent2, agent3,))
+                    (
+                        i.user.id,
+                        agent1,
+                        agent2,
+                        agent3,
+                    ),
+                )
 
                 conn.commit()
 
@@ -119,7 +133,7 @@ class Squad(commands.Cog):
                     f"1. {EMOJIS.get(agent1)} {agent1}\n"
                     f"2. {EMOJIS.get(agent2)} {agent2}\n"
                     f"3. {EMOJIS.get(agent3)} {agent3}\n"
-                    )
+                )
             except Exception as e:
                 await i.followup.send("Something went wrong: " + str(e))
         else:
@@ -127,11 +141,18 @@ class Squad(commands.Cog):
                 cursor.execute(
                     """
                     UPDATE squads SET
-                    agent1 = ?,
-                    agent2 = ?,
-                    agent3 = ?
+                    agent_one = ?,
+                    agent_two = ?,
+                    agent_three = ?
                     WHERE user_id = ?;
-                    """,(agent1, agent2, agent3, i.user.id,))
+                    """,
+                    (
+                        agent1,
+                        agent2,
+                        agent3,
+                        i.user.id,
+                    ),
+                )
 
                 conn.commit()
                 await i.followup.send(
@@ -139,10 +160,10 @@ class Squad(commands.Cog):
                     f"1. {EMOJIS.get(agent1)} {agent1}\n"
                     f"2. {EMOJIS.get(agent2)} {agent2}\n"
                     f"3. {EMOJIS.get(agent3)} {agent3}\n"
-                    )
+                )
             except Exception as e:
                 await i.followup.send("Something went wrong: " + str(e))
-    
+
     @squad.command(name="view", description="View your or another proxy's squad.")
     @app_commands.describe(proxy="The proxy you'll look for.")
     async def view(self, i: discord.Interaction, proxy: discord.Member = None):
@@ -153,16 +174,22 @@ class Squad(commands.Cog):
         cursor.execute("SELECT 1 FROM squads WHERE user_id = ? LIMIT 1;", (proxy.id,))
 
         if cursor.fetchone() is None:
-            await i.followup.send(EMOJIS.get("Avatar") + " This user does not have an Inter-Knot account yet.")
+            await i.followup.send(
+                EMOJIS.get("Avatar")
+                + " This user does not have an Inter-Knot account yet."
+            )
             return
 
-        cursor.execute("SELECT * FROM squads WHERE user_id = ?;",(proxy.id,))
+        cursor.execute("SELECT * FROM squads WHERE user_id = ?;", (proxy.id,))
         results = cursor.fetchone()
 
         e = discord.Embed(title="Proxy Squad", color=discord.Color.blue())
 
         for j in results[2:5]:
-            cursor.execute("SELECT * FROM user_characters WHERE character_name= ? AND user_id = ?;", (j, proxy.id))
+            cursor.execute(
+                "SELECT * FROM user_characters WHERE character_name= ? AND user_id = ?;",
+                (j, proxy.id),
+            )
             char_perks = cursor.fetchone()
 
             perks = f"{EMOJIS.get('EXP')} {char_perks[5]} | {EMOJIS.get('NECF')} {char_perks[3]} | {EMOJIS.get('W-Engine')} {char_perks[6]}"
