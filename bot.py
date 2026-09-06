@@ -12,8 +12,8 @@ cursor = conn.cursor()
 
 dotenv.load_dotenv(".env")
 
-VERSION = "0.2.61b"
-CODENAME = "beckford"
+VERSION = "0.2.7b"
+CODENAME = "ESD"
 STATE = "RELEASE"
 
 dotenv.load_dotenv(".env")
