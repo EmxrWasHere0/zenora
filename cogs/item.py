@@ -198,31 +198,43 @@ class Item(commands.Cog):
 
     @item.command(name="equip", description="Equip a W-Engine for an agent")
     @app_commands.autocomplete(
-        w_engine=autocomplete_engines, agent=autocomplete_characters
+        w_engine=autocomplete_engines,
+        agent=autocomplete_characters
     )
-    async def equip(i: discord.Interaction, w_engine: str, agent: str):
+    async def equip(
+        self,
+        i: discord.Interaction,
+        w_engine: str,
+        agent: str
+    ):
         await i.response.defer(thinking=True)
 
-        cursor.execute("SELECT 1 FROM users WHERE user_id = ? LIMIT 1", (i.user.id,))
+        cursor.execute(
+            "SELECT 1 FROM users WHERE user_id = ? LIMIT 1",
+            (i.user.id,)
+        )
 
         if cursor.fetchone() is None:
             await i.followup.send(
-                f"<:avatar:1536781562677563534> {i.user.mention} doesn't have a Proxy account yet."
+                f"<:avatar:1536781562677563534> "
+                f"{i.user.mention} doesn't have a Proxy account yet."
             )
             return
 
         cursor.execute(
-            "UPDATE user_characters SET w_engine = ? WHERE user_id = ? AND character_name = ?;",
-            (
-                w_engine,
-                i.user.id,
-                agent,
-            ),
+            """
+            UPDATE user_characters
+            SET w_engine = ?
+            WHERE user_id = ? AND character_name = ?
+            """,
+            (w_engine, i.user.id, agent)
         )
+
         conn.commit()
 
         await i.followup.send(
-            f"Successfully set {EMOJIS.get(agent)} **{agent}**'s W-Engine as {EMOJIS.get("W-Engine")} **{w_engine}**"
+            f"Successfully set {EMOJIS.get(agent, '')} **{agent}**'s "
+            f"W-Engine as {EMOJIS.get('W-Engine', '')} **{w_engine}**"
         )
 
 
